@@ -1,111 +1,62 @@
-# üéß Model Card: Music Recommender Simulation
+# Ìæß Model Card: Music Recommender Simulation
 
-## 1. Model Name  
-
-Give your model a short, descriptive name.  
-Example: **VibeFinder 1.0**  
+## 1. Model Name
+VibeFinder 1.0
 
 ---
 
-## 2. Intended Use  
-
-Describe what your recommender is designed to do and who it is for. 
-
-Prompts:  
-
-- What kind of recommendations does it generate  
-- What assumptions does it make about the user  
-- Is this for real users or classroom exploration  
+## 2. Goal / Task
+Suggest 3-5 songs from a small catalog that best match a user taste profile (genre, mood, energy, valence, tempo). Predict which tracks fit the requested vibe.
 
 ---
 
-## 3. How the Model Works  
-
-Explain your scoring approach in simple language.  
-
-Prompts:  
-
-- What features of each song are used (genre, energy, mood, etc.)  
-- What user preferences are considered  
-- How does the model turn those into a score  
-- What changes did you make from the starter logic  
-
-Avoid code here. Pretend you are explaining the idea to a friend who does not program.
+## 3. Data Used
+- Catalog size: 10 songs from `data/songs.csv`.
+- Features: id, title, artist, genre, mood, energy, tempo_bpm, valence, danceability, acousticness.
+- Limits: small dataset, no behavior data, no lyrics or artist similarity.
 
 ---
 
-## 4. Data  
-
-Describe the dataset the model uses.  
-
-Prompts:  
-
-- How many songs are in the catalog  
-- What genres or moods are represented  
-- Did you add or remove data  
-- Are there parts of musical taste missing in the dataset  
+## 4. Algorithm Summary
+- +2.0 points for genre exact match.
+- +1.0 point for mood exact match.
+- Energy closeness adds up to ~1.5 points (more when closer).
+- Valence closeness adds up to ~1.2 points.
+- Tempo closeness adds up to ~1.0 point.
+- Total score is the sum; recommend top N by descending score.
 
 ---
 
-## 5. Strengths  
-
-Where does your system seem to work well  
-
-Prompts:  
-
-- User types for which it gives reasonable results  
-- Any patterns you think your scoring captures correctly  
-- Cases where the recommendations matched your intuition  
+## 5. Observed Behavior / Biases
+- Strong genre weighting can cause repeated top songs across profiles.
+- ‚ÄúGym Hero‚Äù and ‚ÄúStorm Runner‚Äù often appear for multiple personas because of strong numeric closeness and pop/rock representation.
+- Conflicted profiles (high energy + sad mood) show that numeric scores can outvote mood label.
+- The model lacks collaborative context, so it can miss diverse but valid recommendations.
 
 ---
 
-## 6. Limitations and Bias 
-
-Where the system struggles or behaves unfairly. 
-
-Prompts:  
-
-- Features it does not consider  
-- Genres or moods that are underrepresented  
-- Cases where the system overfits to one preference  
-- Ways the scoring might unintentionally favor some users  
+## 6. Evaluation Process
+- Tested user profiles: High-Energy Pop, Chill Lofi, Deep Intense Rock, Adversarial Conflicted.
+- Ran `python -m src.main`; verified top-5 outputs and scored explanations.
+- Experimented with weight shift: doubled energy weight and halved genre weight.
+- Observed where recommendations changed and described surprises.
 
 ---
 
-## 7. Evaluation  
-
-How you checked whether the recommender behaved as expected. 
-
-Prompts:  
-
-- Which user profiles you tested  
-- What you looked for in the recommendations  
-- What surprised you  
-- Any simple tests or comparisons you ran  
-
-No need for numeric metrics unless you created some.
+## 7. Intended Use and Non-Intended Use
+- Intended for classroom exploration and understanding scored content-based recommendation.
+- Not intended for production deployment or fully reliable music personalization.
+- Not intended for demographic fairness or replacing human-curated playlists.
 
 ---
 
-## 8. Future Work  
-
-Ideas for how you would improve the model next.  
-
-Prompts:  
-
-- Additional features or preferences  
-- Better ways to explain recommendations  
-- Improving diversity among the top results  
-- Handling more complex user tastes  
+## 8. Ideas for Improvement
+- Add collaborative filtering signals (likes, listens, skips).
+- Add serendipity/diversity methods to avoid over-concentrating on one song.
+- Add user context (time of day, activity) and dynamic feedback.
+- Include more moods and genres to reduce dataset bias.
 
 ---
 
-## 9. Personal Reflection  
-
-A few sentences about your experience.  
-
-Prompts:  
-
-- What you learned about recommender systems  
-- Something unexpected or interesting you discovered  
-- How this changed the way you think about music recommendation apps  
+## 9. Personal Reflection
+Biggest learning moment: small explicit weights and distance measures can already produce useful recommendations, but they also reveal clear bias easily. AI generated prompt suggestions helped structure the feature and scoring design, yet I needed to double-check calculations and logic manually. It was surprising that this simple system could feel either right or wrong depending on weight tuning; it mimics real recommender tradeoffs. Next I would add real user behavior data and an exploration mechanism to balance close fit vs novelty.
