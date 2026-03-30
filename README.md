@@ -70,7 +70,7 @@ Bias and unfairness happen when the scoring formula is unbalanced. In our exerci
 
 ## 2. Intended Use
 
-This recommender prototype is designed to pick 3 to 5 songs from a small catalog by comparing each track to a user’s stated taste profile (genre, mood, energy level, valence, tempo). It is intended for classroom exploration, learning, and demo purposes, not for production use.
+This recommender prototype is designed to pick 3 to 5 songs from a small catalog by comparing each track to a user’s stated taste profile. It's meant for classroom exploration, learning, and demo purposes, not for production use.
 
 ---
 
@@ -84,7 +84,6 @@ This recommender ranks songs by comparing each song’s attributes to user prefe
 
 The final recommendations are the top-scoring songs, sorted highest to lowest.
 
-Try to avoid code in this section, treat it like an explanation to a non programmer.
 
 ---
 

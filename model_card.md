@@ -1,4 +1,4 @@
-# í¾§ Model Card: Music Recommender Simulation
+# ï¿½ï¿½ï¿½ Model Card: Music Recommender Simulation
 
 ## 1. Model Name
 VibeFinder 1.0
